@@ -19,7 +19,7 @@ import static java.time.LocalDateTime.now;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class UserTrickEntity {
+public class UserTrickProgressEntity {
     @Id
     @GeneratedValue
     @UuidGenerator
