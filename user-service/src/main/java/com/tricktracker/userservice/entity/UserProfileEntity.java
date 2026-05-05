@@ -6,19 +6,17 @@ import com.tricktracker.userservice.enums.SkateLevel;
 import com.tricktracker.userservice.enums.VisibilityLevel;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Collate;
 import org.hibernate.annotations.UuidGenerator;
-import org.springframework.web.service.annotation.GetExchange;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static java.time.LocalDateTime.now;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
