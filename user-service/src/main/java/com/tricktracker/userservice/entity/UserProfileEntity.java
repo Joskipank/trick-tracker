@@ -83,4 +83,6 @@ public class UserProfileEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "presence_status", nullable = false)
     private PresenceStatus presenceStatus;
+
+
 }
