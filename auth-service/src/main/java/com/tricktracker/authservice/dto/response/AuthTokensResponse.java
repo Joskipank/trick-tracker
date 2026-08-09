@@ -1,4 +1,8 @@
 package com.tricktracker.authservice.dto.response;
 
-public class AuthTokensResponse {
-}
+public record AuthTokensResponse(
+        String accessToken,
+        String refreshToken,
+        String tokenType,
+        long expiresIn
+){}

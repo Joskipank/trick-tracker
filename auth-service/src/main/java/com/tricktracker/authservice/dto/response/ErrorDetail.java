@@ -1,4 +1,3 @@
 package com.tricktracker.authservice.dto.response;
 
-public class ErrorDetail {
-}
+public record ErrorDetail(int code, String message) {}

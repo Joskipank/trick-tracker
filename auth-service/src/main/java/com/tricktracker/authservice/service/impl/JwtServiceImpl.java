@@ -1,4 +1,4 @@
 package com.tricktracker.authservice.service.impl;
 
-public class JwtService {
+public class JwtServiceImpl {
 }
