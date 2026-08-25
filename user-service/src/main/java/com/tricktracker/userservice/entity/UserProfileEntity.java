@@ -6,6 +6,7 @@ import com.tricktracker.userservice.enums.SkateLevel;
 import com.tricktracker.userservice.enums.VisibilityLevel;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Internal;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,9 @@ public class UserProfileEntity {
     @UuidGenerator
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
+
+    @Column(name = "seasons_active", nullable = false, updatable = true)
+    private Integer seasonActive = 0;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

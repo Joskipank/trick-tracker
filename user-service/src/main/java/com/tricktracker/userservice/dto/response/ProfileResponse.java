@@ -19,4 +19,5 @@ public class ProfileResponse {
     private String email;
     private VisibilityLevel phoneVisibility;
     private SkateLevel skateLevel;
+    private Integer seasonsSkated;
 }
