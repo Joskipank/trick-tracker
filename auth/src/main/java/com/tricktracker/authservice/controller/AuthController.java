@@ -46,8 +46,8 @@ public class AuthController {
                     "phone", request.getEmail()
             );
 
-            String access  = jwtProvider.generateToken(regResult.getPhone(), claims);
-            String refresh = jwtProvider.generateRefreshToken(regResult.getPhone(), null);
+            String access  = jwtProvider.generateToken(regResult.getEmail(), claims);
+            String refresh = jwtProvider.generateRefreshToken(regResult.getEmail(), null);
 
             var tokens = new AuthTokensResponse(
                     access,

@@ -1,10 +1,7 @@
 package com.tricktracker.authservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,7 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class CredentialsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,17 +21,12 @@ public class CredentialsEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
-
-    @Column(name = "is_verified", nullable = false)
-    private boolean isVerified = true;
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive = true; //Если false, Spring Security автоматически запретит вход
+    private boolean isActive; //Если false, Spring Security автоматически запретит вход
 
-    public CredentialsEntity(String email, String passwordHash){
-        this.email = email;
-        this.passwordHash = passwordHash;
-    }
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified;
 }

@@ -10,7 +10,4 @@ import lombok.*;
 public class RegistrationUserRequest {
     private String email;
     private String password;
-
-    public Object getE() {
-    }
 }

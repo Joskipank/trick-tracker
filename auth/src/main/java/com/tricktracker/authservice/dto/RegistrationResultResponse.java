@@ -14,14 +14,14 @@ public class RegistrationResultResponse {
     private boolean success;
     private String errorCode;
     private String message;
-    private String phone;
+    private String email;
     private int attemptsRemaining;
 
-    public static RegistrationResultResponse success(String phone) {
+    public static RegistrationResultResponse success(String email) {
         return RegistrationResultResponse.builder()
                 .success(true)
                 .message("User registered successfully")
-                .phone(phone)
+                .email(email)
                 .build();
     }
 

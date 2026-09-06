@@ -29,13 +29,18 @@ public class AuthServiceImpl implements AuthService {
                     .success(false)
                     .errorCode("USER_ALREADY_EXISTS")
                     .message("User with this phone already exists")
-                    .phone(request.getEmail())
+                    .email(request.getEmail())
                     .build();
         }
 
         // Создание пользователя
-        CredentialsEntity credentialsUser = new CredentialsEntity(request.getEmail(),
-                passwordEncoder.encode(request.getPassword()));
+
+        CredentialsEntity credentialsUser = CredentialsEntity.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .isVerified(true)
+                .isActive(true)
+                .build();
 
         authRepository.save(credentialsUser);
 
@@ -61,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
             return LoginResultResponse.failed("ACCOUNT_BLOCKED");
         }
 
-        if (!passwordEncoder.matches(request.getPassword(), credentials.getPasswordHash())) {
+        if (!passwordEncoder.matches(request.getPassword(), credentials.getPassword())) {
             return LoginResultResponse.failed("INVALID_CREDENTIALS");
         }
 
