@@ -20,7 +20,7 @@ import static java.time.LocalDateTime.now;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class UserProfileEntity {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
