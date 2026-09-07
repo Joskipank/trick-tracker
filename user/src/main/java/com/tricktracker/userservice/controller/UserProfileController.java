@@ -13,13 +13,15 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/profile")
+@RequestMapping("/api/v1/profiles")
 
 public class UserProfileController {
     private final UserProfileService userProfileService;
 
     @GetMapping("/me")
-    public ResponseEntity<ProfileResponse> getMyProfile(@RequestHeader("X-User-Id") UUID authenticatedUserId){
+    public ResponseEntity<ProfileResponse> getMyProfile(
+            @RequestAttribute("userId") UUID authenticatedUserId // Исправили на RequestAttribute для консистентности
+    ) {
         ProfileResponse response = userProfileService.getMyProfile(authenticatedUserId);
         return ResponseEntity.ok(response);
     }
@@ -31,9 +33,9 @@ public class UserProfileController {
 
     @PatchMapping
     public ResponseEntity<ProfileResponse> updateProfile(
-            @RequestAttribute("authenticatedPhone") String authenticatedPhone,
+            @RequestAttribute("userId") UUID userId,
             @RequestBody @Valid UpdateProfileRequest request
     ) {
-        return ResponseEntity.ok(userProfileService.updateProfile(authenticatedPhone, request));
+        return ResponseEntity.ok(userProfileService.updateProfile(userId, request));
     }
 }

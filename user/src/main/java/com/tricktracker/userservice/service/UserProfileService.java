@@ -1,5 +1,6 @@
 package com.tricktracker.userservice.service;
 
+import com.tricktracker.userservice.dto.request.CreateProfileRequest;
 import com.tricktracker.userservice.dto.request.UpdateProfileRequest;
 import com.tricktracker.userservice.dto.response.ProfileResponse;
 
@@ -10,5 +11,7 @@ public interface UserProfileService {
 
     ProfileResponse getProfileByUsername(String username);
 
-    ProfileResponse updateProfile(String authenticatedPhone, UpdateProfileRequest request);
+    ProfileResponse updateProfile(UUID uuid, UpdateProfileRequest request);
+
+    void createUserProfile(UUID userId, CreateProfileRequest request);
 }

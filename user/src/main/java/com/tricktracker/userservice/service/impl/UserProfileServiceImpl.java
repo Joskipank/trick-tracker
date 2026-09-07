@@ -1,5 +1,6 @@
 package com.tricktracker.userservice.service.impl;
 
+import com.tricktracker.userservice.dto.request.CreateProfileRequest;
 import com.tricktracker.userservice.dto.request.UpdateProfileRequest;
 import com.tricktracker.userservice.dto.response.ProfileResponse;
 import com.tricktracker.userservice.entity.UserProfileEntity;
@@ -31,18 +32,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfileEntity userProfileEntity = userProfileRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND", "Profile not found"));
 
-        return ProfileResponse.builder()
-                .username(userProfileEntity.getUsername())
-                .firstName(userProfileEntity.getFirstName())
-                .lastName(userProfileEntity.getLastName())
-                .bio(userProfileEntity.getBio())
-                .avatarSvg(userProfileEntity.getAvatarSvg())
-                .phone(userProfileEntity.getPhone())
-                .email(userProfileEntity.getEmail())
-                .phoneVisibility(userProfileEntity.getPhoneVisibility())
-                .skateLevel(userProfileEntity.getSkateLevel())
-                .seasonsSkated(userProfileEntity.getSeasonsActive())
-                .build();
+        return toOwnProfileResponse(userProfileEntity);
     }
 
     @Override
@@ -61,14 +51,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public ProfileResponse updateProfile(String authenticatedPhone, UpdateProfileRequest request) {
+    @Transactional
+    public ProfileResponse updateProfile(UUID uuid, UpdateProfileRequest request) {
         if (request == null) {
             throw new BadRequestException("Request is required");
         }
 
-        String normalizedPhone = normalizePhone(authenticatedPhone);
-
-        UserProfileEntity profile = userProfileRepository.findByPhone(normalizedPhone)
+        UserProfileEntity profile = userProfileRepository.findById(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND", "Profile not found"));
 
         if (hasText(request.getUsername())) {
@@ -106,16 +95,28 @@ public class UserProfileServiceImpl implements UserProfileService {
             profile.setPhoneVisibility(request.getPhoneVisibility());
         }
 
-        if (request.getPhoneVisibility() != null){
-            profile.setPhoneVisibility(request.getPhoneVisibility());
-        }
-
         try {
             UserProfileEntity saved = userProfileRepository.save(profile);
             return toOwnProfileResponse(saved);
         } catch (DataIntegrityViolationException ex) {
             throw new ConflictException("Profile update conflict");
         }
+    }
+
+    @Override
+    @Transactional
+    public void createUserProfile(UUID userId, CreateProfileRequest request) {
+        String normalizedUsername = normalizeUsername(request.getUsername());
+
+        if(userProfileRepository.existsByUsername(request.getUsername())) {
+            throw new ConflictException("Username is already taken");
+        }
+
+        UserProfileEntity profile = UserProfileEntity.builder()
+                .id(userId)
+                .username(normalizedUsername)
+                .build();
+        userProfileRepository.save(profile);
     }
 
     private ProfileResponse toOwnProfileResponse(UserProfileEntity profile) {
@@ -128,6 +129,8 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .phone(profile.getPhone())
                 .phoneVisibility(resolvePhoneVisibility(profile))
                 .email(profile.getEmail())
+                .skateLevel(profile.getSkateLevel())
+                .seasonsSkated(profile.getSeasonsActive())
                 .build();
     }
 

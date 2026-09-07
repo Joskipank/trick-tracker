@@ -17,5 +17,5 @@ public interface UserProfileRepository extends JpaRepository<UserProfileEntity, 
     //Проверяет, существует ли уже пользователь с таким номером телефона.
     boolean existsByPhone(String phone);
 
-    Optional<UserProfileEntity> findByPhone(String phone);
+    Optional<UserProfileEntity> findByEmail(String email);
 }
