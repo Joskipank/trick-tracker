@@ -105,7 +105,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     @Transactional
-    public void createUserProfile(UUID userId, CreateProfileRequest request) {
+    public void createUserProfile(CreateProfileRequest request) {
         String normalizedUsername = normalizeUsername(request.getUsername());
 
         if(userProfileRepository.existsByUsername(request.getUsername())) {
@@ -113,7 +113,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileEntity profile = UserProfileEntity.builder()
-                .id(userId)
+                .email(request.getEmail())
+                .id(request.getUserId())
                 .username(normalizedUsername)
                 .build();
         userProfileRepository.save(profile);

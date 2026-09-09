@@ -29,13 +29,14 @@ public class UserProfileEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Builder.Default
     @Column(name = "seasons_active", nullable = false, updatable = true)
     private Integer seasonsActive = 0;
 
     @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "phone", nullable = false, unique = true)
+    @Column(name = "phone", unique = true)
     private String phone;
 
     @Column(name = "first_name")
@@ -50,21 +51,25 @@ public class UserProfileEntity {
     @Column(name = "avatar_svg", columnDefinition = "TEXT")
     private String avatarSvg;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "skate_level", nullable = false)
     private SkateLevel skateLevel = SkateLevel.BEGINNER;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "phone_visibility", nullable = false)
-    private VisibilityLevel phoneVisibility = VisibilityLevel.HIDDEN;
+    private VisibilityLevel phoneVisibility = VisibilityLevel.PUBLIC;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "account_status", nullable = false)
-    private AccountStatus accountStatus;
+    private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "presence_status", nullable = false)
-    private PresenceStatus presenceStatus;
+    private PresenceStatus presenceStatus = PresenceStatus.AWAY;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

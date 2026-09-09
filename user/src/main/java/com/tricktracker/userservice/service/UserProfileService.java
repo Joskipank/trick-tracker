@@ -13,5 +13,5 @@ public interface UserProfileService {
 
     ProfileResponse updateProfile(UUID uuid, UpdateProfileRequest request);
 
-    void createUserProfile(UUID userId, CreateProfileRequest request);
+    void createUserProfile(CreateProfileRequest request);
 }

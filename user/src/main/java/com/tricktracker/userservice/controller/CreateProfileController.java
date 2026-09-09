@@ -21,9 +21,8 @@ public class CreateProfileController {
 
     @PostMapping("/create")
     public ResponseEntity<Void> createProfile(
-            @AuthenticationPrincipal UUID authenticatedUserId,
             @RequestBody @Valid CreateProfileRequest request) {
-        userProfileService.createUserProfile(authenticatedUserId, request);
+        userProfileService.createUserProfile(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

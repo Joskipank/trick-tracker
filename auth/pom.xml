@@ -29,6 +29,12 @@
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.trick-tracker</groupId>
+            <artifactId>user</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
