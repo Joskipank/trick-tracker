@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("AuthService тесты")
+@DisplayName("AuthModule tests")
 class AuthServiceTest {
 
     @Mock
