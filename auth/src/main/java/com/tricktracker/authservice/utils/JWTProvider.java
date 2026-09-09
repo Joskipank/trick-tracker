@@ -52,8 +52,8 @@ public class JWTProvider {
     /**
      * Генерация access-токена
      */
-    public String generateToken(String phone, Map<String, Object> customClaims) {
-        return generateTokenInternal(phone, customClaims, expirationTime, "access");
+    public String generateToken(String email, Map<String, Object> customClaims) {
+        return generateTokenInternal(email, customClaims, expirationTime, "access");
     }
     public long getAccessTokenExpirationSeconds() {
         return expirationTime / 1000;
@@ -61,22 +61,22 @@ public class JWTProvider {
     /**
      * Генерация refresh-токена (дольше живёт)
      */
-    public String generateRefreshToken(String phone, Map<String, Object> customClaims) {
+    public String generateRefreshToken(String email, Map<String, Object> customClaims) {
         long refreshExpiration = expirationTime * 24; // 24 часа
-        return generateTokenInternal(phone, customClaims, refreshExpiration, "refresh");
+        return generateTokenInternal(email, customClaims, refreshExpiration, "refresh");
     }
 
     /**
      * Внутренний метод генерации
      */
     private String generateTokenInternal(
-            String phone,
+            String email,
             Map<String, Object> customClaims,
             long ttlMillis,
             String tokenType) {
 
-        if (phone == null || phone.isBlank()) {
-            throw new IllegalArgumentException("Phone cannot be null or empty");
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email cannot be null or empty");
         }
 
         Instant now = Instant.now();
@@ -84,7 +84,7 @@ public class JWTProvider {
 
         JwtBuilder builder = Jwts.builder()
                 .id(UUID.randomUUID().toString())           // jti — уникальный ID токена
-                .subject(phone)                              // sub — субъект
+                .subject(email)                              // sub — субъект
                 .issuer(issuer)                              // iss — издатель
                 .audience().add(audience).and()              // aud — получатель
                 .issuedAt(Date.from(now))                    // iat — время выпуска
@@ -140,10 +140,16 @@ public class JWTProvider {
     }
 
     /**
-     * Извлечение phone (subject) из токена
+     * Извлечение email (subject) из токена
      */
-    public String extractPhone(String token) {
+    public String extractEmail(String token) {
         return validateAndParseToken(token).getSubject();
+    }
+    /**
+     * Извлечение ID (subject) из токена
+     */
+    public String extractUserId(String token) {
+        return validateAndParseToken(token).get("userId", String.class);
     }
 
     /**
