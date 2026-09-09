@@ -21,8 +21,8 @@
     <modules>
         <module>auth</module>
         <module>user</module>
-        <module>trick</module>
-        <module>spot</module>
+<!--        <module>trick</module>-->
+<!--        <module>spot</module>-->
         <module>main-app</module>
     </modules>
 
