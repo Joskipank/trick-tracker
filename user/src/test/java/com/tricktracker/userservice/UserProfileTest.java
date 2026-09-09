@@ -9,11 +9,7 @@ import com.tricktracker.userservice.exception.BadRequestException;
 import com.tricktracker.userservice.exception.ConflictException;
 import com.tricktracker.userservice.exception.ResourceNotFoundException;
 import com.tricktracker.userservice.repository.UserProfileRepository;
-import com.tricktracker.userservice.service.UserProfileService;
 import com.tricktracker.userservice.service.impl.UserProfileServiceImpl;
-import org.aspectj.lang.annotation.Before;
-import org.h2.engine.User;
-import org.hibernate.sql.model.PreparableMutationOperation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -25,8 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.Spliterator;
 import java.util.UUID;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -35,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("AuthModule tests")
-public class UserProfileControllerTest {
+public class UserProfileTest {
     @Mock
     private UserProfileRepository userProfileRepository;
 
