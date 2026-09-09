@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
-                        .requestMatchers("/auth/v1/otp/**").permitAll()
+                        .requestMatchers("/auth/v1/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

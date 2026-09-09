@@ -6,6 +6,8 @@ import com.tricktracker.authservice.dto.request.LoginUserRequest;
 import com.tricktracker.authservice.entity.CredentialsEntity;
 import com.tricktracker.authservice.repository.AuthRepository;
 import com.tricktracker.authservice.service.AuthService;
+import com.tricktracker.userservice.dto.request.CreateProfileRequest;
+import com.tricktracker.userservice.service.UserProfileService;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
     private final AuthRepository authRepository;
+    private final UserProfileService userProfileService;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -36,15 +39,23 @@ public class AuthServiceImpl implements AuthService {
         // Создание пользователя
 
         CredentialsEntity credentialsUser = CredentialsEntity.builder()
-                .email(request.getEmail())
+                .email(normalizeEmail(request.getEmail()))
                 .password(passwordEncoder.encode(request.getPassword()))
                 .isVerified(true)
                 .isActive(true)
                 .build();
 
-        authRepository.save(credentialsUser);
+        CredentialsEntity savedUser = authRepository.save(credentialsUser);
 
-        return RegistrationResultResponse.success(request.getEmail());
+        CreateProfileRequest profileRequest = CreateProfileRequest.builder()
+                .email(savedUser.getEmail())
+                .userId(savedUser.getId())
+                .username("user_" + System.currentTimeMillis())
+                .build();
+
+        userProfileService.createUserProfile(profileRequest);
+
+        return RegistrationResultResponse.success(savedUser.getEmail());
     }
 
     @Transactional
@@ -73,4 +84,11 @@ public class AuthServiceImpl implements AuthService {
         return LoginResultResponse.success(credentials);
     }
 
+
+    private String normalizeEmail(String email) {
+        if (email == null) {
+            return null;
+        }
+        return email.trim().toLowerCase();
+    }
 }
