@@ -15,10 +15,9 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/profile")
+@RequestMapping("/api/v1/profiles")
 public class CreateProfileController {
     private final UserProfileService userProfileService;
-
     @PostMapping("/create")
     public ResponseEntity<Void> createProfile(
             @RequestBody @Valid CreateProfileRequest request) {

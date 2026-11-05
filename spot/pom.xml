@@ -12,8 +12,8 @@
     </parent>
 
     <artifactId>spot</artifactId>
-    <name>spot-service</name>
-    <description>spot service for trick-tracker</description>
+    <name>spot-module</name>
+    <description>spot module for trick-tracker</description>
 
     <dependencies>
         <dependency>

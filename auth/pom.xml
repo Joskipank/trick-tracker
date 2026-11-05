@@ -12,8 +12,8 @@
     </parent>
 
     <artifactId>auth</artifactId>
-    <name>auth-service</name>
-    <description>auth service for trick-tracker</description>
+    <name>auth-module</name>
+    <description>auth module for trick-tracker</description>
 
     <dependencies>
         <dependency>

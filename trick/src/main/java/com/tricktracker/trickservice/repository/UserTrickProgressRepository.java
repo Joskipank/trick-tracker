@@ -4,6 +4,8 @@ import com.tricktracker.trickservice.entity.TrickEntity;
 import com.tricktracker.trickservice.entity.UserTrickProgressEntity;
 import com.tricktracker.trickservice.enums.ProgressStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,12 @@ public interface UserTrickProgressRepository extends JpaRepository<UserTrickProg
     boolean existsByUserIdAndTrickId(UUID userId, UUID trickId); // проверить существование (очень полезно)
 
     List<UserTrickProgressEntity> findAllByUserId(UUID userId); // все прогрессы пользователя
+
+    @Query("SELECT p FROM UserTrickProgressEntity p JOIN FETCH p.trick WHERE p.userId = :userId AND p.trick.id = :trickId")
+    Optional<UserTrickProgressEntity> findByUserIdAndTrickIdWithTrick(
+            @Param("userId") UUID userId,
+            @Param("trickId") UUID trickId
+    );
 
     List<UserTrickProgressEntity> findAllByUserIdAndIsFavoriteTrue(UUID userId);
 

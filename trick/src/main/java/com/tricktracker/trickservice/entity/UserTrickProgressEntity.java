@@ -1,5 +1,5 @@
 package com.tricktracker.trickservice.entity;
-
+import com.tricktracker.userservice.entity.UserProfileEntity;
 import com.tricktracker.trickservice.enums.ProgressStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +18,7 @@ import static java.time.LocalDateTime.now;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
 public class UserTrickProgressEntity {
     @Id
@@ -28,11 +29,21 @@ public class UserTrickProgressEntity {
     @Column(name = "user_id", nullable = false)
     private UUID userId; // UUID из user-service
 
-    @Column(name = "trick_id", nullable = false)
-    private UUID trickId; // UUID из текущего trick-service
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trick_id", nullable = false)
+    private TrickEntity trick;// UUID из текущего trick-service
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", length = 2000)
     private String notes;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ProgressStatus progressStatus = ProgressStatus.NOT_STARTED;
+
+    @Builder.Default
+    @Column(name = "is_favorite", nullable = false)
+    private boolean isFavorite = false;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -51,11 +62,5 @@ public class UserTrickProgressEntity {
         updatedAt = now();
     }
 
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private ProgressStatus status = ProgressStatus.NOT_STARTED;
 
-    @Column(name = "is_favorite", nullable = false)
-    private boolean isFavorite;
 }

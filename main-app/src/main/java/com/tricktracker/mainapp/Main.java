@@ -8,15 +8,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = {
         "com.tricktracker.mainapp",
         "com.tricktracker.authservice",
-        "com.tricktracker.userservice" // <-- ДОБАВЛЕНО
+        "com.tricktracker.userservice"
 })
 @EnableJpaRepositories(basePackages = {
         "com.tricktracker.authservice.repository",
-        "com.tricktracker.userservice.repository" // <-- ДОБАВЛЕНО
+        "com.tricktracker.userservice.repository"
 })
 @EntityScan(basePackages = {
         "com.tricktracker.authservice.entity",
-        "com.tricktracker.userservice.entity" // <-- ДОБАВЛЕНО
+        "com.tricktracker.userservice.entity"
 })
 public class Main {
     public static void main(String[] args) {

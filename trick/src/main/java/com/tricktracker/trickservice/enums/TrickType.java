@@ -1,6 +1,6 @@
 package com.tricktracker.trickservice.enums;
 
-public enum TrickCategory {
+public enum TrickType {
     FLATGROUND, // Трюки на плоскости (Ollie, Kickflip, Shove-it)
     GRIND, // Скольжения на подвесках (50-50, Smith, Feeble)
     SLIDE, // Скольжения на доске (Boardslide, Lipslide, Noseblunt)

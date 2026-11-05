@@ -12,8 +12,8 @@
     </parent>
 
     <artifactId>user</artifactId>
-    <name>user-service</name>
-    <description>user service for trick-tracker</description>
+    <name>user-module</name>
+    <description>user module for trick-tracker</description>
 
     <dependencyManagement>
         <dependencies>

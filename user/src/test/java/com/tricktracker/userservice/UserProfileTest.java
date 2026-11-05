@@ -208,7 +208,7 @@ public class UserProfileTest {
         void createUserProfile_ShouldSuccess_WhenUsernameIsAvailable() {
             when(userProfileRepository.existsByUsername("Bucky_Lasek")).thenReturn(false);
 
-            assertDoesNotThrow(() -> userProfileService.createUserProfile(userId, createRequest));
+            assertDoesNotThrow(() -> userProfileService.createUserProfile(createRequest));
 
             verify(userProfileRepository, times(1)).save(any(UserProfileEntity.class));
         }
@@ -219,7 +219,7 @@ public class UserProfileTest {
             when(userProfileRepository.existsByUsername("Bucky_Lasek")).thenReturn(true);
 
             // Act & Assert
-            assertThrows(ConflictException.class, () -> userProfileService.createUserProfile(userId, createRequest));
+            assertThrows(ConflictException.class, () -> userProfileService.createUserProfile(createRequest));
             verify(userProfileRepository, never()).save(any());
         }
     }

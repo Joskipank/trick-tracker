@@ -1,6 +1,6 @@
 package com.tricktracker.trickservice.entity;
 
-import com.tricktracker.trickservice.enums.TrickCategory;
+import com.tricktracker.trickservice.enums.TrickType;
 import com.tricktracker.trickservice.enums.SkateLevel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,6 +17,7 @@ import static java.time.LocalDateTime.now;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
 public class TrickEntity {
     @Id
@@ -24,9 +25,6 @@ public class TrickEntity {
     @UuidGenerator
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
-
-    @Column(nullable = false, unique = true, updatable = false)
-    private String slug; //Slug — это человекочитаемый уникальный идентификатор
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -51,8 +49,8 @@ public class TrickEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "tutorial_url")
-    private String tutorialUrl;
+    @Column(name = "video_url")
+    private String videoUrl;
 
     @Column(name = "avatar_svg", columnDefinition = "TEXT")
     private String avatarSvg;
@@ -62,6 +60,6 @@ public class TrickEntity {
     private SkateLevel skateLevel;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "trick_category", nullable = false)
-    private TrickCategory trickCategory;
+    @Column(name = "trick_type", nullable = false)
+    private TrickType trickType;
 }
